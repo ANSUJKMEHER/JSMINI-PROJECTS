@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #333;
+        }
+        
+        .box {
+            display: inline-block;
+            margin: 10px;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+        
+        .emoji {
+            font-size: 60px;
+            height: 70px;
+        }
+        
+        .txt {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border: 1px solid #999;
+            background: #f0f0f0;
+        }
+        
+        .btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .msg {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+            height: 25px;
+        }
+        
+        .sc {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+        }
+        
+        .num {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rock Paper Scissors Game</h1>
+
+    <div>
+        <div class="box">
+            <p>You</p>
+            <div class="emoji" id="p1">?</div>
+            <div class="txt" id="pn"></div>
+        </div>
+        <div class="box">
+            <p>Computer</p>
+            <div class="emoji" id="p2">?</div>
+            <div class="txt" id="cn"></div>
+        </div>
+    </div>
+
+    <div>
+        <button class="btn" onclick="play('rock')">Rock</button>
+        <button class="btn" onclick="play('paper')">Paper</button>
+        <button class="btn" onclick="play('scissors')">Scissors</button>
+    </div>
+
+    <div class="msg" id="res"></div>
+
+    <div>
+        <div class="sc">
+            <p>Wins</p>
+            <div class="num" id="w">0</div>
+        </div>
+        <div class="sc">
+            <p>Loss</p>
+            <div class="num" id="l">0</div>
+        </div>
+        <div class="sc">
+            <p>Draw</p>
+            <div class="num" id="d">0</div>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <button class="btn" onclick="reset()">Clear</button>
+    </div>
+
+    <script>
+        let w = 0;
+        let l = 0;
+        let d = 0;
+
+        let ch = {
+            rock: 'R',
+            paper: 'P',
+            scissors: 'S'
+        };
+
+        function getComp() {
+            let a = ['rock', 'paper', 'scissors'];
+            return a[Math.floor(Math.random() * 3)];
+        }
+
+        function check(pc, cc) {
+            if (pc === cc) {
+                return 'd';
+            }
+
+            if (
+                (pc === 'rock' && cc === 'scissors') ||
+                (pc === 'paper' && cc === 'rock') ||
+                (pc === 'scissors' && cc === 'paper')
+            ) {
+                return 'w';
+            }
+
+            return 'l';
+        }
+
+        function play(pc) {
+            let cc = getComp();
+            let res = check(pc, cc);
+
+            document.getElementById('p1').textContent = ch[pc];
+            document.getElementById('pn').textContent = pc;
+
+            document.getElementById('p2').textContent = ch[cc];
+            document.getElementById('cn').textContent = cc;
+
+            let el = document.getElementById('res');
+            if (res === 'w') {
+                el.textContent = 'You Win!';
+                w++;
+            } else if (res === 'l') {
+                el.textContent = 'You Lose!';
+                l++;
+            } else {
+                el.textContent = 'Draw!';
+                d++;
+            }
+
+            document.getElementById('w').textContent = w;
+            document.getElementById('l').textContent = l;
+            document.getElementById('d').textContent = d;
+        }
+
+        function reset() {
+            w = 0;
+            l = 0;
+            d = 0;
+            document.getElementById('w').textContent = '0';
+            document.getElementById('l').textContent = '0';
+            document.getElementById('d').textContent = '0';
+            document.getElementById('res').textContent = '';
+            document.getElementById('p1').textContent = '?';
+            document.getElementById('p2').textContent = '?';
+            document.getElementById('pn').textContent = '';
+            document.getElementById('cn').textContent = '';
+        }
+    </script>
+</body>
+</html>
